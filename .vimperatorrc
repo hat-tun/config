@@ -1,0 +1,61 @@
+"2.3.1 (created: 2010/04/07 18:56:53)
+
+set runtimepath=/Users/hattun/.vimperator
+source! /Users/hattun/.vimperatorrc.local
+
+"""keymap
+map j 5<C-e>
+map k 5<C-y>
+map h <C-p>
+map l <C-n>
+
+" ignore jump to google
+map <C-k> <Nop> 
+" ignore jump to google
+map <C-j> <Nop>
+" ignore jump to bookmark
+map <C-h> <Nop> 
+" twitter 
+map ,t :twitter<Space>
+map ,T :twitter!<Space>
+map ,@ :twitter!<CR>
+map ,mt :mr<Space>twitter-search-pcod-no-jp<Space>
+map ,mT :mr<Space>twitter-search-pcod-no-jp<Space>["hattun"]<CR>
+
+
+
+""" option
+
+
+
+" ignore literal case in searching
+set ignorecase
+
+
+""" hatebu search
+
+" javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
+
+
+""" char-hints-mod2
+
+let g:hintsio="iO"
+let g:hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
+
+
+""" hatebu delicious bookmark
+
+let g:direct_sbm_use_services_by_tag = "h"
+let g:direct_sbm_use_services_by_post = "h"
+
+
+""" feedSomeKey2
+:autocmd LocationChange .* :fmapc
+""gmail
+:autocmd LocationChange 'mail\.google\.com/mail' :fmap c / j k n p o u e x s r a # [ ] z ? gi gs gt gd ga gc
+
+""livedoor reader
+:autocmd LocationChange 'reader\.livedoor\.com/reader' :fmap j k s a p o v c <Space> <S-Space> z b < >
+
+
+" vim: set ft=vimperator:

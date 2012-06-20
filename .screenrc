@@ -1,0 +1,6 @@
+escape ^O^O
+
+
+
+hardstatus on
+hardstatus alwayslastline  "%H[%n] [%w]"
