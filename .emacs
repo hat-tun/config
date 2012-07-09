@@ -22,17 +22,17 @@
 (load "elscreen" "ElScreen" t)
 
 ;;; gtags
-;; (when (locate-library "gtags") (require 'gtags)) 
-;; (global-set-key "\M-t" 'gtags-find-tag)
-;; (global-set-key "\M-r" 'gtags-find-rtag)
-;; (global-set-key "\M-s" 'gtags-find-symbol)
-;; (global-set-key "\M-f" 'gtags-find-file)
-;; (global-set-key "\C-t" 'gtags-pop-stack)
-;; (add-hook 'gtags-select-mode-hook 'hi-line-mode)
-;; (add-hook 'c-mode-common-hook
-;; 	  '(lambda ()
-;; 		(gtags-mode 1)
-;; 		(gtags-make-complete-list)))
+(when (locate-library "gtags") (require 'gtags)) 
+(global-set-key "\M-t" 'gtags-find-tag)
+(global-set-key "\M-r" 'gtags-find-rtag)
+(global-set-key "\M-s" 'gtags-find-symbol)
+(global-set-key "\M-f" 'gtags-find-file)
+(global-set-key "\C-t" 'gtags-pop-stack)
+(add-hook 'gtags-select-mode-hook 'hi-line-mode)
+(add-hook 'c-mode-common-hook
+	  '(lambda ()
+		(gtags-mode 1)
+		(gtags-make-complete-list)))
 
 ;;; color-moccur
 (load "color-moccur")
@@ -62,43 +62,58 @@
 (setq recentf-max-saved-items 1000)
 (recentf-mode 1)
 
+(require 'anything-startup)
+(dolist (map (list
+              anything-map
+              anything-c-buffer-map
+              anything-find-files-map
+              anything-c-read-file-map
+              anything-generic-files-map
+              anything-c-grep-map
+              anything-c-pdfgrep-map
+              anything-c-etags-map
+;              anything-eval-expression-map
+;              anything-c-ucs-map
+;              anything-c-bookmark-map
+;             anything-esh-on-file-map
+              ))
+  (define-key map (kbd "C-h") 'delete-backward-char)
+  (define-key map (kbd "C-w") 'backward-kill-word)
+  )
+;; (global-set-key (kbd "C-x a a") 'anything-apropos)
+;; (global-set-key (kbd "C-x b") 'anything-for-files)
+;; (require 'anything-c-moccur)
+;; (global-set-key (kbd "C-; C-s") 'anything-c-moccur-occur-by-moccur)
+;; (define-key isearch-mode-map (kbd "C-o") 'anything-c-moccur-from-isearch)
+;; ;(setq anything-samewindow nil)
+;; ;(push '("*anything*" :regexp t :height 20) popwin:special-display-config)
+;; (setq recentf-max-saved-items 500)
+;; (setq enable-recursive-minibuffers t)
+;; ;; バッファに対しては、カーソルを合わせただけで中身を表示する
+;; (defun-add-hook 'anything-move-selection-after-hook
+;;   (when (eq (cdr (assq 'type (anything-get-current-source))) 'buffer)
+;;     (anything-execute-persistent-action)))
+
 (require 'anything-gtags)
-
-;;; tag select function
-;; (defun anything-etags-and-gtags-select ()
-;;   "Tag jump using etags, gtags and anything."
-;;   (interactive)
-;;   (let* ((initial-pattern (regexp-quote (or (thing-at-point 'symbol) ""))))
-;;     (anything (list anything-c-source-gtags-select
-;; 		    anything-c-source-etags-select)
-;; 	      (if (or anything-etags-enable-initial-pattern anything-gtags-enable-initial-pattern) 
-;; 		  initial-pattern)
-;; 	      "Find Tag: " nil)))
-
-
-;;; gdb
-(setq gdb-many-windows t)
-(setq gdb-use-separate-io-buffer t)
-
-;;; don't display startup page
-(setq inhibit-startup-message t)
-
-;;; don't make backup files
-(setq backup-inhibited t)
-
-;;; initial window size
-(if window-system (progn
-    (setq initial-frame-alist '((width . 110) (height . 60) (top . 10)))
-    (set-background-color "White")
-    (set-foreground-color "Black")
-    (set-cursor-color "Gray")
-))
 
 ;;; blink cursor
 (blink-cursor-mode t)
 
 ;;; delete scroll bar
 (set-scroll-bar-mode nil)
+
+;;; window
+(set-frame-parameter (selected-frame) 'alpha '(80 70))
+(set-background-color "Black")
+(set-foreground-color "LightGray")
+(setq initial-frame-alist
+      (append (list
+	       '(width . 205)
+	       '(height . 65)
+	       '(top . 0)
+	       '(left . 0)
+	       )))
+(setq inhibit-splash-screen t)
  
 ;;; beap ignore
 (setq ring-bell-function 'ignore)
@@ -123,6 +138,7 @@
 ;;; key bind
 (define-key global-map (kbd "C-;") 'anything) ; anything
 (define-key global-map "\C-h" 'delete-backward-char) ; delete
+(define-key global-map "\C-z" 'undo) ; undo
 (define-key global-map "\C-x \C-c" 'save-buffers-kill-emacs) ;save and exit
 ;(define-key global-map "\C-@" 'set-mark-command) ; set-mark
 (define-key global-map "\C- " 'set-mark-command) ; set-mark
@@ -146,8 +162,6 @@
 ;(scim-define-common-key ?\C-\  nil)
 ;(scim-define-common-key ?\C-j t)
 ;(setq scim-cursor-color '("red" "blue" "limegreen")
-
-
 
 
 ;;; Yatex
